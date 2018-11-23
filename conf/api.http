@@ -1,0 +1,7 @@
+@host = http://localhost:65115
+
+### 
+GET {{host}}/api/Feeds
+Content-Type: application/json
+
+
