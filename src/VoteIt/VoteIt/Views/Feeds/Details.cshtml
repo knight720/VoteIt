@@ -1,0 +1,48 @@
+﻿@model VoteIt.Models.Feed
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Feed</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FeedTitle)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FeedTitle)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FeedLike)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FeedLike)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FeedCreatedDateTime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FeedCreatedDateTime)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FeedCreatedUser)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FeedCreatedUser)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FeedValidFlag)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FeedValidFlag)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.FeedId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -1,0 +1,51 @@
+﻿@model VoteIt.Models.Feed
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Feed</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FeedTitle)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FeedTitle)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FeedLike)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FeedLike)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FeedCreatedDateTime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FeedCreatedDateTime)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FeedCreatedUser)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FeedCreatedUser)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FeedValidFlag)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FeedValidFlag)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="FeedId" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>
