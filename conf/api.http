@@ -1,7 +1,17 @@
 @host = http://localhost:65115
 
-### 
+### List
 GET {{host}}/api/Feeds
 Content-Type: application/json
 
+### Create 
+POST {{host}}/api/Feeds
+Content-Type: application/json
 
+{
+    "FeedTitle": "Knight Title",
+    "FeedLike":"999",
+    "FeedCreatedDateTime":"2018/11/24 12:34",
+    "FeedCreatedUser":"Knight",
+    "FeedValidFlag":"1",
+}
