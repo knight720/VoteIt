@@ -3,6 +3,7 @@ for details on configuring this project to bundle and minify static web assets. 
 body {
     padding-top: 50px;
     padding-bottom: 20px;
+    font-family: 'IBM Plex Sans', sans-serif;
 }
 
 /* Wrapping element */
@@ -34,4 +35,22 @@ body {
     .carousel-caption {
         display: none;
     }
+}
+
+.like {
+    height: 1em;
+}
+
+.unlike {
+    height: 1em;
+    transform: rotate(180deg);
+}
+
+.feed {
+    font-size: 1em;
+}
+
+.feedInfo {
+    font-size: 0.85em;
+    color: rgb(120, 124, 126);
 }

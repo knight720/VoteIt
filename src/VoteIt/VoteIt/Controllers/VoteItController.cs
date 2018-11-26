@@ -37,18 +37,25 @@ namespace VoteIt.Controllers
         // POST: VoteIt/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Create([Bind("FeedTitle")] Feed feed)
         {
-            try
+            feed.FeedCreatedDateTime = DateTime.Now;
+            feed.FeedCreatedUser = "Knight";
+            feed.FeedLike = 0;
+            feed.FeedValidFlag = true;
+
+            // TODO: Add insert logic here
+            if (ModelState.IsValid)
             {
-                // TODO: Add insert logic here
+                using (var context = new VoteItDBContext())
+                {
+                    context.Add(feed);
+                    await context.SaveChangesAsync();
+                }
 
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View(feed);
         }
 
         // GET: VoteIt/Edit/5
