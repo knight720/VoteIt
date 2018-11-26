@@ -21,12 +21,12 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FeedTitle)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FeedCreatedDateTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FeedCreatedUser)
+                <br>
+                <span class="feedInfo">
+                    @Html.DisplayFor(modelItem => item.FeedCreatedUser)
+                    /
+                    @Html.DisplayFor(modelItem => item.FeedCreatedDateTime)
+                </span>
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.FeedId">Edit</a> |
