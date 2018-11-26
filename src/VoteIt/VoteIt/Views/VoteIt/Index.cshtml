@@ -5,49 +5,28 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Vote It !</h2>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FeedTitle)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FeedLike)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FeedCreatedDateTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FeedCreatedUser)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FeedValidFlag)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.FeedTitle)
+                <img src="~/images/thumbs-up.svg" class="like" />
+                @Html.DisplayFor(modelItem => item.FeedLike)
+                <img src="~/images/thumbs-up.svg" class="unlike"/>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.FeedLike)
+                @Html.DisplayFor(modelItem => item.FeedTitle)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FeedCreatedDateTime)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FeedCreatedUser)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FeedValidFlag)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.FeedId">Edit</a> |

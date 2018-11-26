@@ -1,6 +1,10 @@
 # VoteIt
 Vote It !
 
+[Trello Kanban](https://trello.com/b/0vR0ujR0/voit-it)
+
+docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=?' -e 'MSSQL_PID=Express' -p 1433:1433 -v D:\Docker\VoteItDB:/var/opt/mssql -d mcr.microsoft.com/mssql/server:latest
+
 Scaffold-DbContext "Server=localhost;Database=VoteItDB;User ID=sa;Password=?;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models  
 
 ## Rference

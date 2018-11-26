@@ -35,3 +35,12 @@ body {
         display: none;
     }
 }
+
+.like {
+    height: 1em;
+}
+
+.unlike {
+    height: 1em;
+    transform: rotate(180deg);
+}
