@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using VoteIt.Models;
+using VoteIt.Repositories;
 
 namespace VoteIt
 {
@@ -37,6 +38,8 @@ namespace VoteIt
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddEntityFrameworkSqlServer();
+
+            services.AddScoped<FeedRepository>();
 
             services.AddDbContextPool<VoteItDBContext>(options => 
                 options.UseSqlServer(Configuration.GetConnectionString("VoteItDBDatabase")));

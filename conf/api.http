@@ -15,3 +15,7 @@ Content-Type: application/json
     "FeedCreatedUser":"Knight",
     "FeedValidFlag":"1",
 }
+
+### Like
+POST {{host}}/api/Feeds/UpdateLike/4
+

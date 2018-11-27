@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using VoteIt.Models;
+using VoteIt.Repositories;
 
 namespace VoteIt.Controllers.Apis
 {
@@ -14,10 +15,12 @@ namespace VoteIt.Controllers.Apis
     public class FeedsController : ControllerBase
     {
         private readonly VoteItDBContext _context;
+        private readonly FeedRepository _feedRepositry;
 
-        public FeedsController(VoteItDBContext context)
+        public FeedsController(VoteItDBContext context, FeedRepository feedRepository)
         {
-            _context = context;
+            this._context = context;
+            this._feedRepositry = feedRepository;
         }
 
         // GET: api/Feeds
@@ -120,6 +123,12 @@ namespace VoteIt.Controllers.Apis
         private bool FeedExists(int id)
         {
             return _context.Feed.Any(e => e.FeedId == id);
+        }
+
+        [HttpPost("UpdateLike/{feedId}")]
+        public async void UpdateLike(int feedId)
+        {
+            this._feedRepositry.UpdateLike(feedId);
         }
     }
 }
