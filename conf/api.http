@@ -1,4 +1,4 @@
-@host = http://localhost:65115
+@host = https://localhost:44335
 
 ### List
 GET {{host}}/api/Feeds
@@ -16,6 +16,6 @@ Content-Type: application/json
     "FeedValidFlag":"1",
 }
 
-### Like
+### Update Like
 POST {{host}}/api/Feeds/UpdateLike/4
 
