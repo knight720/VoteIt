@@ -15,3 +15,5 @@ Scaffold-DbContext "Server=localhost;Database=VoteItDB;User ID=sa;Password=?;" M
 [dotnet folder structure](https://github.com/dotnet/project-system)
 
 [Connection Strings](https://docs.microsoft.com/en-us/ef/core/miscellaneous/connection-strings)
+
+[[ASP.NET Core] Identity - Part 1 使用 Google 登入](https://blog.kevinyang.net/2018/05/31/aspnet-core-identity/)
