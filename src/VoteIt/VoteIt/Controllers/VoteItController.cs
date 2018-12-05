@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -37,6 +38,7 @@ namespace VoteIt.Controllers
         }
 
         // GET: VoteIt/Create
+        [Authorize]
         public ActionResult Create()
         {
             return View();
@@ -45,6 +47,7 @@ namespace VoteIt.Controllers
         // POST: VoteIt/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<ActionResult> Create([Bind("FeedTitle")] Feed feed)
         {
             var user = this._userManager.GetUserName(User);

@@ -127,6 +127,7 @@ namespace VoteIt.Controllers.Apis
         }
 
         [HttpPost("UpdateLike/{feedId}")]
+        [Authorize]
         public async void UpdateLike(int feedId)
         {
             var user = this._userManager.GetUserName(User);

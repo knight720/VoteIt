@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using VoteIt.Data;
+using VoteIt.Filters;
 using VoteIt.Models;
 using VoteIt.Repositories;
 using VoteIt.Services;
@@ -33,7 +34,10 @@ namespace VoteIt
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+            services.AddMvc(config =>
+                config.Filters.Add(new AuthorizationFilter())
+                )
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddRazorPagesOptions(options =>
             {
                 options.AllowAreas = true;
