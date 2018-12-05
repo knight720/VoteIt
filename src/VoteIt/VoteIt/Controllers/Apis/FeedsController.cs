@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using VoteIt.Models;
@@ -14,11 +15,13 @@ namespace VoteIt.Controllers.Apis
     {
         private readonly VoteItDBContext _context;
         private readonly FeedRepository _feedRepositry;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public FeedsController(VoteItDBContext context, FeedRepository feedRepository)
+        public FeedsController(VoteItDBContext context, FeedRepository feedRepository, UserManager<IdentityUser> userManager)
         {
             this._context = context;
             this._feedRepositry = feedRepository;
+            this._userManager = userManager;
         }
 
         // GET: api/Feeds
@@ -126,6 +129,13 @@ namespace VoteIt.Controllers.Apis
         [HttpPost("UpdateLike/{feedId}")]
         public async void UpdateLike(int feedId)
         {
+            var user = this._userManager.GetUserName(User);
+
+            if (user == null)
+            {
+                //throw new Exception("尚未認證");
+            }
+
             this._feedRepositry.UpdateLike(feedId);
         }
     }

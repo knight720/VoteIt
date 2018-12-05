@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using VoteIt.Models;
 
@@ -10,6 +11,13 @@ namespace VoteIt.Controllers
 {
     public class VoteItController : Controller
     {
+        private readonly UserManager<IdentityUser> _userManager;
+
+        public VoteItController(UserManager<IdentityUser> userManager)
+        {
+            this._userManager = userManager;
+        }
+
         // GET: VoteIt
         public ActionResult Index()
         {
@@ -39,8 +47,15 @@ namespace VoteIt.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind("FeedTitle")] Feed feed)
         {
+            var user = this._userManager.GetUserName(User);
+
+            if (user == null)
+            {
+                //throw new Exception("尚未認證");
+            }
+
             feed.FeedCreatedDateTime = DateTime.Now;
-            feed.FeedCreatedUser = "Knight";
+            feed.FeedCreatedUser = this._userManager.GetUserName(User);
             feed.FeedLike = 0;
             feed.FeedValidFlag = true;
 
