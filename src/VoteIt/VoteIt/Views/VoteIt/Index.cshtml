@@ -51,6 +51,8 @@
                     //showResult(this.responseText);
                     console.log('success');
                     location.reload();
+                } else if (request.status = 401) {
+                    alert('Login first!');
                 } else {
                     console.log('error');
                     alert(request.status);

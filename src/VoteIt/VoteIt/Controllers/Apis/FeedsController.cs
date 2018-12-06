@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -129,32 +130,48 @@ namespace VoteIt.Controllers.Apis
         }
 
         [HttpPost("UpdateLike/{feedId}")]
-        [Authorize]
-        public async void UpdateLike(int feedId)
+        public async Task<IActionResult> UpdateLike(int feedId)
         {
             var user = this._userManager.GetUserName(User);
 
             if (user == null)
             {
-                //throw new Exception("尚未認證");
+                return Unauthorized();
             }
 
             this._feedRepositry.UpdateLike(feedId);
+            return Ok();
         }
 
         [HttpPost("CreateLike/{feedId}")]
-        [Authorize]
-        public async void CreateFeedLike(int feedId)
+        public async Task<IActionResult> CreateFeedLike(int feedId)
         {
             var user = this._userManager.GetUserName(User);
 
-            var feedLike = new FeedLike();
-            feedLike.FeedLikeFeedId = feedId;
-            feedLike.FeedLikeCreatedUser = user;
-            feedLike.FeedLikeCreatedDateTime = DateTime.Now;
-            feedLike.FeedLikeValidFlag = true;
+            if (user == null)
+            {
+                return Unauthorized();
+            }
 
-            this._feedRepositry.CreateFeedLike(feedLike);
+            var message = string.Empty;
+            if (this._feedRepositry.IsLike(feedId, user))
+            {
+                message = "Already like!";
+            }
+            else
+            {
+                var feedLike = new FeedLike();
+                feedLike.FeedLikeFeedId = feedId;
+                feedLike.FeedLikeCreatedUser = user;
+                feedLike.FeedLikeCreatedDateTime = DateTime.Now;
+                feedLike.FeedLikeValidFlag = true;
+
+                this._feedRepositry.CreateFeedLike(feedLike);
+
+                message = "Success";
+            }
+           
+            return Ok(message);
         }
     }
 }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using VoteIt.Models;
 
 namespace VoteIt.Repositories
@@ -26,6 +23,15 @@ namespace VoteIt.Repositories
         {
             this._context.FeedLike.Add(feedLike);
             this._context.SaveChanges();
+        }
+
+        public bool IsLike(long feedId, string user)
+        {
+            var isLike = this._context.FeedLike.Any(i => i.FeedLikeFeedId == feedId
+            && i.FeedLikeCreatedUser == user
+            && i.FeedLikeValidFlag == true);
+
+            return isLike;
         }
     }
 }
