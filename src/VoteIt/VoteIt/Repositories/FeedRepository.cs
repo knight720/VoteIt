@@ -21,5 +21,11 @@ namespace VoteIt.Repositories
             feed.FeedLike++;
             this._context.SaveChanges();
         }
+
+        public void CreateFeedLike(FeedLike feedLike)
+        {
+            this._context.FeedLike.Add(feedLike);
+            this._context.SaveChanges();
+        }
     }
 }

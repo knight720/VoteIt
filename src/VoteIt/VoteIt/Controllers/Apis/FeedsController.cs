@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -139,6 +140,21 @@ namespace VoteIt.Controllers.Apis
             }
 
             this._feedRepositry.UpdateLike(feedId);
+        }
+
+        [HttpPost("CreateLike/{feedId}")]
+        [Authorize]
+        public async void CreateFeedLike(int feedId)
+        {
+            var user = this._userManager.GetUserName(User);
+
+            var feedLike = new FeedLike();
+            feedLike.FeedLikeFeedId = feedId;
+            feedLike.FeedLikeCreatedUser = user;
+            feedLike.FeedLikeCreatedDateTime = DateTime.Now;
+            feedLike.FeedLikeValidFlag = true;
+
+            this._feedRepositry.CreateFeedLike(feedLike);
         }
     }
 }

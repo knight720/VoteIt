@@ -39,7 +39,8 @@
 @section Scripts {
     <script>
         function like(id) {
-            let url = window.location.origin + '/api/feeds/updatelike/' + id;
+            //let url = window.location.origin + '/api/feeds/updatelike/' + id;
+            let url = window.location.origin + '/api/feeds/createlike/' + id;
             var request = new XMLHttpRequest();
             request.open('POST', url, true);
             //request.setRequestHeader('Content-type', 'application/json');
