@@ -16,6 +16,7 @@ namespace VoteIt.Models
         }
 
         public virtual DbSet<Feed> Feed { get; set; }
+        public virtual DbSet<FeedLike> FeedLike { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -50,6 +51,28 @@ namespace VoteIt.Models
                     .HasMaxLength(160);
 
                 entity.Property(e => e.FeedValidFlag).HasColumnName("Feed_ValidFlag");
+            });
+
+            modelBuilder.Entity<FeedLike>(entity =>
+            {
+                entity.HasIndex(e => new { e.FeedLikeFeedId, e.FeedLikeCreatedUser })
+                    .HasName("IDX_FeedId_CreatedUser");
+
+                entity.Property(e => e.FeedLikeId).HasColumnName("FeedLike_Id");
+
+                entity.Property(e => e.FeedLikeCreatedDateTime)
+                    .HasColumnName("FeedLike_CreatedDateTime")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.FeedLikeCreatedUser)
+                    .IsRequired()
+                    .HasColumnName("FeedLike_CreatedUser")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FeedLikeFeedId).HasColumnName("FeedLike_FeedId");
+
+                entity.Property(e => e.FeedLikeValidFlag).HasColumnName("FeedLike_ValidFlag");
             });
         }
     }
