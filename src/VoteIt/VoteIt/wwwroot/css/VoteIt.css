@@ -54,3 +54,19 @@ body {
     font-size: 0.85em;
     color: rgb(120, 124, 126);
 }
+
+.navbar-inverse {
+    background-color: #e7462b;
+}
+
+.navbar-inverse .navbar-brand {
+    color: white;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color: white;
+}
+
+.navbar-inverse .navbar-link {
+    color: white;
+}
