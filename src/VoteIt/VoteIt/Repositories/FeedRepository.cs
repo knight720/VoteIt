@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using VoteIt.Models;
 
 namespace VoteIt.Repositories
@@ -33,5 +34,30 @@ namespace VoteIt.Repositories
 
             return isLike;
         }
+
+        public List<Feed> GetFeedList()
+        {
+            var list = this._context.Feed.ToList(); ;
+            return list;
+        }
+
+        public void CreateFeed(Feed feed)
+        {
+            this._context.Add(feed);
+            this._context.SaveChangesAsync();
+        }
+
+        //public List<Feed> FeedList()
+        //{
+        //    this._context.Feed.Join(
+        //        this._context.FeedLike,
+        //        i => i.FeedId,
+        //        j => j.FeedLikeFeedId,
+        //        (i,j) => new {
+        //            i.FeedId,
+        //            i.FeedTitle,
+        //            //i.
+        //        })
+        //}
     }
 }

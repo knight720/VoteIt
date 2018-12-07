@@ -24,3 +24,11 @@ Scaffold-DbContext "Server=localhost;Database=VoteItDB;User ID=sa;Password=[?];"
 [[ASP.NET Core] Identity - Part 1 使用 Google 登入](https://blog.kevinyang.net/2018/05/31/aspnet-core-identity/)
 
 [svg icon](https://www.flaticon.com/)
+
+## How to 
+重建 VoteItDB  
+"SQL Server 物件總管"連線至 (localdb)\\mssqllocaldb  
+執行 conf/init.sql 建立資料庫  
+
+重建 ApplicationDB  
+"套件管理器組控台" 執行 Update-Database -Context ApplicationDbContext
