@@ -70,3 +70,16 @@ body {
 .navbar-inverse .navbar-link {
     color: white;
 }
+
+.create-new {
+    display: inline-block;
+    position: absolute;
+    right: 10%;
+    bottom: 10%;
+    z-index: 505;
+}
+
+.create-new-img {
+    height: 56px;
+    width: 56px;
+}
