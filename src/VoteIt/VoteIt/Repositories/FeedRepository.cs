@@ -47,17 +47,32 @@ namespace VoteIt.Repositories
             this._context.SaveChangesAsync();
         }
 
-        //public List<Feed> FeedList()
-        //{
-        //    this._context.Feed.Join(
-        //        this._context.FeedLike,
-        //        i => i.FeedId,
-        //        j => j.FeedLikeFeedId,
-        //        (i,j) => new {
-        //            i.FeedId,
-        //            i.FeedTitle,
-        //            //i.
-        //        })
-        //}
+        /// <summary>
+        /// 由 FeedLike 統計 Like 數
+        /// </summary>
+        /// <returns></returns>
+        public List<Feed> GetFeedListWithFeedLike()
+        {
+            var feedLikeCount = this._context.FeedLike.GroupBy(fl => fl.FeedLikeFeedId)
+                .Select(fl => new
+                {
+                    FeedLike_FeedId = fl.Key,
+                    FeedLike_Count = fl.Count()
+                });
+
+            var feedList = this._context.Feed.GroupJoin(feedLikeCount,
+            f => f.FeedId,
+            l => l.FeedLike_FeedId,
+            (f, flc) => new Feed
+            {
+                FeedId = f.FeedId,
+                FeedTitle = f.FeedTitle,
+                FeedCreatedDateTime = f.FeedCreatedDateTime,
+                FeedCreatedUser = f.FeedCreatedUser,
+                FeedLike = flc.Count() > 0 ? flc.First().FeedLike_Count : 0
+            }).ToList();
+
+            return feedList;
+        }
     }
 }

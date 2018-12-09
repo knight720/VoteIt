@@ -1,32 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using VoteIt.Models;
+using VoteIt.Repositories;
 
 namespace VoteIt.Controllers
 {
     public class VoteItController : Controller
     {
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly FeedRepository _feedRepository;
 
-        public VoteItController(UserManager<IdentityUser> userManager)
+        public VoteItController(UserManager<IdentityUser> userManager, FeedRepository feedRepository)
         {
             this._userManager = userManager;
+            this._feedRepository = feedRepository;
         }
 
         // GET: VoteIt
         public ActionResult Index()
         {
-            List<Feed> list;
-            using (var context = new VoteItDBContext())
-            {
-                list = context.Feed.ToList();
-            }
+            List<Feed> list = this._feedRepository.GetFeedListWithFeedLike();
 
             return View(list);
         }

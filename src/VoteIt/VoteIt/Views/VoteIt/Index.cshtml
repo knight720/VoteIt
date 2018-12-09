@@ -43,18 +43,23 @@
 @section Scripts {
     <script>
         function like(id) {
-            let url = window.location.origin + '/api/feeds/updatelike/' + id;
-            //let url = window.location.origin + '/api/feeds/createlike/' + id;
+            //let url = window.location.origin + '/api/feeds/updatelike/' + id;
+            let url = window.location.origin + '/api/feeds/createlike/' + id;
             var request = new XMLHttpRequest();
             request.open('POST', url, true);
             //request.setRequestHeader('Content-type', 'application/json');
             request.onload = function () {
                 console.log(this.status);
                 if (request.status >= 200 && request.status < 400) {
+                    console.log('success');
                     console.log(this.responseText);
                     //showResult(this.responseText);
-                    console.log('success');
-                    location.reload();
+                    if (this.responseText) {
+                        alert(this.responseText);
+                    }
+                    else {
+                        location.reload();
+                    }
                 } else if (request.status = 401) {
                     alert('Login first!');
                 } else {

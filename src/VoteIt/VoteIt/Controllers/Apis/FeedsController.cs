@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -167,10 +165,8 @@ namespace VoteIt.Controllers.Apis
                 feedLike.FeedLikeValidFlag = true;
 
                 this._feedRepositry.CreateFeedLike(feedLike);
-
-                message = "Success";
             }
-           
+
             return Ok(message);
         }
     }
