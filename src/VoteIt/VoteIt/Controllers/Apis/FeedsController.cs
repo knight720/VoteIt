@@ -169,5 +169,18 @@ namespace VoteIt.Controllers.Apis
 
             return Ok(message);
         }
+
+        /// <summary>
+        /// 取得 like 的 User List
+        /// </summary>
+        /// <param name="feedId"></param>
+        /// <returns></returns>
+        [HttpGet("GetLikeUserList/{feedId}")]
+        public async Task<IActionResult> GetLikeUserList(int feedId)
+        {
+            var list = this._feedRepositry.GetLikeUserList(feedId);
+
+            return Ok(list);
+        }
     }
 }

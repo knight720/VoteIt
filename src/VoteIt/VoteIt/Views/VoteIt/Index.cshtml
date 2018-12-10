@@ -20,7 +20,7 @@
         {
             <tr>
                 <td>
-                    <img src="~/images/thumbs-up_91app.svg" class="like" id="@item.FeedId" onclick="like(@item.FeedId)" />
+                    <img src="~/images/thumbs-up_91app.svg" class="like" id="@item.FeedId" onclick="like(@item.FeedId)" onmouseover="likeUser(@item.FeedId)" onmouseout="clearTooltip(@item.FeedId)"/>
                     @Html.DisplayFor(modelItem => item.FeedLike)
                     <img src="~/images/thumbs-up.svg" class="unlike hidden" />
                 </td>
@@ -42,18 +42,17 @@
 
 @section Scripts {
     <script>
+        //// 新增 like
         function like(id) {
-            //let url = window.location.origin + '/api/feeds/updatelike/' + id;
             let url = window.location.origin + '/api/feeds/createlike/' + id;
             var request = new XMLHttpRequest();
             request.open('POST', url, true);
-            //request.setRequestHeader('Content-type', 'application/json');
             request.onload = function () {
                 console.log(this.status);
                 if (request.status >= 200 && request.status < 400) {
                     console.log('success');
                     console.log(this.responseText);
-                    //showResult(this.responseText);
+
                     if (this.responseText) {
                         alert(this.responseText);
                     }
@@ -68,6 +67,43 @@
                 }
             };
             request.send();
+        }
+
+        //// 顯示 like 的使用者
+        function likeUser(id) {
+            let url = window.location.origin + '/api/feeds/GetLikeUserList/' + id;
+            var request = new XMLHttpRequest();
+            request.responseType = 'json';
+            request.open('GET', url, true);
+            request.onload = function () {
+                console.log(this.status);
+                if (request.status >= 200 && request.status < 400) {
+                    console.log('success');
+                    console.log(request.response);
+
+                    let item = document.getElementById(id);
+
+                    let result = request.response;
+                    let message = '';
+                    for (let i in result) {
+                        message += result[i] + '\n';
+                    }
+
+                    item.setAttribute('data-toggle', 'tooltip');
+                    item.setAttribute('title', message);
+                } else {
+                    console.log('error');
+                    alert(request.status);
+                }
+            };
+            request.send();
+        }
+
+        //// 清除 Tooltip
+        function clearTooltip(id) {
+            let item = document.getElementById(id);
+            item.removeAttribute('data-toggle');
+            item.removeAttribute('title');
         }
     </script>
 }

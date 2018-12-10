@@ -1,10 +1,10 @@
 @host = https://localhost:44335
 
-### List
+### List Feed
 GET {{host}}/api/Feeds
 Content-Type: application/json
 
-### Create 
+### Create Feed
 POST {{host}}/api/Feeds
 Content-Type: application/json
 
@@ -18,4 +18,7 @@ Content-Type: application/json
 
 ### Update Like
 POST {{host}}/api/Feeds/UpdateLike/4
+
+### Get Like User List
+GET {{host}}/api/feeds/GetLikeUserList/11
 

@@ -86,5 +86,20 @@ namespace VoteIt.Repositories
 
             return feedList;
         }
+
+        /// <summary>
+        /// 取得 like 的 User List
+        /// </summary>
+        /// <param name="feedId"></param>
+        /// <returns></returns>
+        public List<string> GetLikeUserList(int feedId)
+        {
+            var result = this._context.FeedLike
+                .Where(i => i.FeedLikeFeedId == feedId)
+                .Select(i => i.FeedLikeCreatedUser)
+                .ToList();
+
+            return result;
+        }
     }
 }
