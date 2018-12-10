@@ -60,17 +60,29 @@ namespace VoteIt.Repositories
                     FeedLike_Count = fl.Count()
                 });
 
-            var feedList = this._context.Feed.GroupJoin(feedLikeCount,
-            f => f.FeedId,
-            l => l.FeedLike_FeedId,
-            (f, flc) => new Feed
-            {
-                FeedId = f.FeedId,
-                FeedTitle = f.FeedTitle,
-                FeedCreatedDateTime = f.FeedCreatedDateTime,
-                FeedCreatedUser = f.FeedCreatedUser,
-                FeedLike = flc.Count() > 0 ? flc.First().FeedLike_Count : 0
-            }).ToList();
+            var feedList = this._context.Feed.GroupJoin(
+                feedLikeCount,
+                f => f.FeedId,
+                l => l.FeedLike_FeedId,
+                (f, flc) => new Feed
+                {
+                    FeedId = f.FeedId,
+                    FeedTitle = f.FeedTitle,
+                    FeedCreatedDateTime = f.FeedCreatedDateTime,
+                    FeedCreatedUser = f.FeedCreatedUser,
+                    FeedLike = flc.Count() > 0 ? flc.First().FeedLike_Count : 0
+                })
+                .ToList();
+
+            return feedList;
+        }
+
+        public List<Feed> GetFeedListWithFeedLikeOrderByLike()
+        {
+            var feedList = this.GetFeedListWithFeedLike()
+                .OrderByDescending(i => i.FeedLike)
+                .ThenBy(i => i.FeedCreatedDateTime)
+                .ToList();
 
             return feedList;
         }

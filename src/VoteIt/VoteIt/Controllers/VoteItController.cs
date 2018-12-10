@@ -24,7 +24,7 @@ namespace VoteIt.Controllers
         // GET: VoteIt
         public ActionResult Index()
         {
-            List<Feed> list = this._feedRepository.GetFeedListWithFeedLike();
+            List<Feed> list = this._feedRepository.GetFeedListWithFeedLikeOrderByLike();
 
             return View(list);
         }
