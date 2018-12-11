@@ -89,17 +89,29 @@ namespace VoteIt.Areas.Identity.Pages.Account
             }
             else
             {
-                // If the user does not have an account, then ask the user to create an account.
+                //If the user does not have an account, then ask the user to create an account.
                 ReturnUrl = returnUrl;
                 LoginProvider = info.LoginProvider;
-                if (info.Principal.HasClaim(c => c.Type == ClaimTypes.Email))
+
+                var user = new IdentityUser { UserName = info.Principal.Identity.Name, Email = info.Principal.FindFirstValue(ClaimTypes.Email) };
+                var createResult = await _userManager.CreateAsync(user);
+                if (createResult.Succeeded)
                 {
-                    Input = new InputModel
+                    createResult = await _userManager.AddLoginAsync(user, info);
+                    if (createResult.Succeeded)
                     {
-                        Email = info.Principal.FindFirstValue(ClaimTypes.Email)
-                    };
+                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        _logger.LogInformation("User created an account using {Name} provider.", info.LoginProvider);
+                        return LocalRedirect(returnUrl);
+                    }
                 }
+                foreach (var error in createResult.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+
                 return Page();
+
             }
         }
 

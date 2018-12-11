@@ -12,8 +12,11 @@ Scaffold-DbContext "Server=localhost;~Database=VoteItDB;User ID=[?];Password=[?]
 -Tables Feed FeedLike
 -force  
 
+- [建立 LocalDB Instance](https://docs.microsoft.com/zh-tw/sql/tools/sqllocaldb-utility?view=sql-server-2017)  
+"套件管理器組控台" 執行 sqllocaldb create MSSQLLocalDB
+
 - 重建 VoteItDB  
-"SQL Server 物件總管"連線至 (localdb)\\mssqllocaldb  
+"SQL Server 物件總管"連線至 (localdb)\\MSSQLLocalDB  
 執行 conf/init.sql 建立資料庫  
 
 - 重建 ApplicationDB  

@@ -1,6 +1,4 @@
-﻿using System;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -13,7 +11,6 @@ using VoteIt.Data;
 using VoteIt.Filters;
 using VoteIt.Models;
 using VoteIt.Repositories;
-using VoteIt.Services;
 
 namespace VoteIt
 {
@@ -47,9 +44,6 @@ namespace VoteIt
                 options.Conventions.AuthorizeAreaPage("Identity", "/Account/Logout");
             });
 
-           
-            services.AddSingleton<IEmailSender, EmailSender>();
-
             services.AddEntityFrameworkSqlServer();
 
             //// General
@@ -63,7 +57,10 @@ namespace VoteIt
             services.AddSingleton(option).AddScoped<VoteItDBContext>();
 
             //// Auth
-            services.AddIdentity<IdentityUser, IdentityRole>()
+            services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            {
+                options.User.AllowedUserNameCharacters = null;
+            })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -81,7 +78,7 @@ namespace VoteIt
                 googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
             });
         }
-        
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
