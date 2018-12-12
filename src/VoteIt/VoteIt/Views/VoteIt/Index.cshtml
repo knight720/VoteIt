@@ -19,7 +19,7 @@
         {
             <tr>
                 <td>
-                    <img src="~/images/thumbs-up_91app.svg" class="like" id="@item.FeedId" onclick="like(@item.FeedId)" onmouseover="likeUser(@item.FeedId)" onmouseout="clearTooltip(@item.FeedId)" />
+                    <img src="~/images/thumbs-up_91app.svg" class="like" id="@item.FeedId" onclick="like(@item.FeedId)" data-toggle="tooltip" data-placement="bottom" data-html="true" onmouseover="likeUser(@item.FeedId)" />
                     @Html.DisplayFor(modelItem => item.FeedLike)
                     <img src="~/images/thumbs-up.svg" class="unlike hidden" />
                 </td>
@@ -116,24 +116,16 @@
                     let result = request.response;
                     let message = '';
                     for (let i in result) {
-                        message += result[i] + '\n';
+                        message += result[i] + '<br>';
                     }
 
-                    item.setAttribute('data-toggle', 'tooltip');
-                    item.setAttribute('title', message);
+                    item.setAttribute('data-original-title', message);
                 } else {
                     console.log('error');
                     alert(request.status);
                 }
             };
             request.send();
-        }
-
-        //// 清除 Tooltip
-        function clearTooltip(id) {
-            let item = document.getElementById(id);
-            item.removeAttribute('data-toggle');
-            item.removeAttribute('title');
         }
 
         //// Create Feed
@@ -159,7 +151,7 @@
                     alert(request.status);
                 }
             };
-            request.send(JSON.stringify({ "FeedTitle": feedTitle}));
+            request.send(JSON.stringify({ "FeedTitle": feedTitle }));
         }
     </script>
 }
