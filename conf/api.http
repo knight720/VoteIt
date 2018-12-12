@@ -13,7 +13,15 @@ Content-Type: application/json
     "FeedLike":"999",
     "FeedCreatedDateTime":"2018/11/24 12:34",
     "FeedCreatedUser":"Knight",
-    "FeedValidFlag":"1",
+    "FeedValidFlag":true,
+}
+
+### Create Feed
+POST {{host}}/api/Feeds
+Content-Type: application/json
+
+{
+    "FeedTitle": "Knight Title",
 }
 
 ### Update Like

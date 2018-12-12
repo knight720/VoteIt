@@ -9,18 +9,17 @@
 
 <p>
     <div class="create-new">
-        <a asp-action="Create">
-            <img src="~/images/add-button-inside-black-circle_91app.svg" class="create-new-img" title="Create New" />
-        </a>
+        <img src="~/images/add-button-inside-black-circle_91app.svg" class="create-new-img" title="Create New" data-toggle="modal" data-target="#createNew" />
     </div>
 </p>
+
 <table class="table">
     <tbody>
         @foreach (var item in Model)
         {
             <tr>
                 <td>
-                    <img src="~/images/thumbs-up_91app.svg" class="like" id="@item.FeedId" onclick="like(@item.FeedId)" onmouseover="likeUser(@item.FeedId)" onmouseout="clearTooltip(@item.FeedId)"/>
+                    <img src="~/images/thumbs-up_91app.svg" class="like" id="@item.FeedId" onclick="like(@item.FeedId)" onmouseover="likeUser(@item.FeedId)" onmouseout="clearTooltip(@item.FeedId)" />
                     @Html.DisplayFor(modelItem => item.FeedLike)
                     <img src="~/images/thumbs-up.svg" class="unlike hidden" />
                 </td>
@@ -39,6 +38,37 @@
         }
     </tbody>
 </table>
+<!-- Create New -->
+<div class="modal fade" id="createNew" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Create Feed</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form>
+                            <div class="text-danger"></div>
+                            <div class="form-group">
+                                我覺得...
+                                <input id="feedTitle" class="form-control" />
+                                <span class="text-danger"></span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="createFeed()" data-dismiss="modal">Create</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section Scripts {
     <script>
@@ -59,7 +89,7 @@
                     else {
                         location.reload();
                     }
-                } else if (request.status = 401) {
+                } else if (request.status == 401) {
                     alert('Login first!');
                 } else {
                     console.log('error');
@@ -104,6 +134,32 @@
             let item = document.getElementById(id);
             item.removeAttribute('data-toggle');
             item.removeAttribute('title');
+        }
+
+        //// Create Feed
+        function createFeed() {
+            let element = document.getElementById('feedTitle');
+            let feedTitle = element.value;
+
+            let url = window.location.origin + '/api/Feeds';
+            var request = new XMLHttpRequest();
+            request.open('POST', url, true);
+            request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            request.onload = function () {
+                console.log(this.status);
+                if (request.status >= 200 && request.status < 400) {
+                    console.log('success');
+                    console.log(this.responseText);
+
+                    location.reload();
+                } else if (request.status == 401) {
+                    alert('Login first!');
+                } else {
+                    console.log('error');
+                    alert(request.status);
+                }
+            };
+            request.send(JSON.stringify({ "FeedTitle": feedTitle}));
         }
     </script>
 }

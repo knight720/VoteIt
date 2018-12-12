@@ -19,7 +19,7 @@ Scaffold-DbContext "Server=localhost;~Database=VoteItDB;User ID=[?];Password=[?]
 "SQL Server 物件總管"連線至 (localdb)\\MSSQLLocalDB  
 執行 conf/init.sql 建立資料庫  
 
-- 重建 ApplicationDB  
+- [重建 ApplicationDB](https://docs.microsoft.com/zh-tw/aspnet/core/security/authentication/scaffold-identity?view=aspnetcore-2.2&tabs=visual-studio)  
 "套件管理器組控台" 執行 Update-Database -Context ApplicationDbContext  
 
 ## Rference
@@ -38,4 +38,4 @@ Scaffold-DbContext "Server=localhost;~Database=VoteItDB;User ID=[?];Password=[?]
 
 - [SVG Icon](https://www.flaticon.com/)
 
-
+- [Bootstrap popup tooltip](https://getbootstrap.com/docs/4.0/components/modal/)  

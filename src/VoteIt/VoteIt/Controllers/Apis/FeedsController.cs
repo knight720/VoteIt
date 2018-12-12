@@ -90,6 +90,18 @@ namespace VoteIt.Controllers.Apis
         [HttpPost]
         public async Task<IActionResult> PostFeed([FromBody] Feed feed)
         {
+            var user = this._userManager.GetUserName(User);
+
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+
+            feed.FeedCreatedDateTime = DateTime.Now;
+            feed.FeedCreatedUser = this._userManager.GetUserName(User);
+            feed.FeedLike = 0;
+            feed.FeedValidFlag = true;
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
