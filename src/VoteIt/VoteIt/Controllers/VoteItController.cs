@@ -48,7 +48,7 @@ namespace VoteIt.Controllers
         [Authorize]
         public async Task<ActionResult> Create([Bind("FeedTitle")] Feed feed)
         {
-            var user = this._userManager.GetUserName(User);
+            var user = await this._userManager.GetUserAsync(User);
 
             if (user == null)
             {
@@ -56,7 +56,7 @@ namespace VoteIt.Controllers
             }
 
             feed.FeedCreatedDateTime = DateTime.Now;
-            feed.FeedCreatedUser = this._userManager.GetUserName(User);
+            feed.FeedCreatedUser = user.Email;
             feed.FeedLike = 0;
             feed.FeedValidFlag = true;
 

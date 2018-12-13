@@ -90,7 +90,7 @@ namespace VoteIt.Controllers.Apis
         [HttpPost]
         public async Task<IActionResult> PostFeed([FromBody] Feed feed)
         {
-            var user = this._userManager.GetUserName(User);
+            var user = await this._userManager.GetUserAsync(User);
 
             if (user == null)
             {
@@ -98,7 +98,7 @@ namespace VoteIt.Controllers.Apis
             }
 
             feed.FeedCreatedDateTime = DateTime.Now;
-            feed.FeedCreatedUser = this._userManager.GetUserName(User);
+            feed.FeedCreatedUser = user.Email;
             feed.FeedLike = 0;
             feed.FeedValidFlag = true;
 
@@ -156,7 +156,7 @@ namespace VoteIt.Controllers.Apis
         [HttpPost("CreateLike/{feedId}")]
         public async Task<IActionResult> CreateFeedLike(int feedId)
         {
-            var user = this._userManager.GetUserName(User);
+            var user = await this._userManager.GetUserAsync(User);
 
             if (user == null)
             {
@@ -164,7 +164,7 @@ namespace VoteIt.Controllers.Apis
             }
 
             var message = string.Empty;
-            if (this._feedRepositry.IsLike(feedId, user))
+            if (this._feedRepositry.IsLike(feedId, user.Email))
             {
                 message = "Already like!";
             }
@@ -172,7 +172,7 @@ namespace VoteIt.Controllers.Apis
             {
                 var feedLike = new FeedLike();
                 feedLike.FeedLikeFeedId = feedId;
-                feedLike.FeedLikeCreatedUser = user;
+                feedLike.FeedLikeCreatedUser = user.Email;
                 feedLike.FeedLikeCreatedDateTime = DateTime.Now;
                 feedLike.FeedLikeValidFlag = true;
 
