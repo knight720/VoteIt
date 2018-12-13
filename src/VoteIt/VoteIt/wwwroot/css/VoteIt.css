@@ -83,3 +83,7 @@ body {
     height: 56px;
     width: 56px;
 }
+
+.btn-danger {
+    background-color: #e7462b;
+}
