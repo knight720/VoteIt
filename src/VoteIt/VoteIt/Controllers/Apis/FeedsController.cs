@@ -17,12 +17,14 @@ namespace VoteIt.Controllers.Apis
         private readonly VoteItDBContext _context;
         private readonly FeedRepository _feedRepositry;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserRepository _userRepository;
 
-        public FeedsController(VoteItDBContext context, FeedRepository feedRepository, UserManager<IdentityUser> userManager)
+        public FeedsController(VoteItDBContext context, FeedRepository feedRepository, UserManager<IdentityUser> userManager, UserRepository userRepository)
         {
             this._context = context;
             this._feedRepositry = feedRepository;
             this._userManager = userManager;
+            this._userRepository = userRepository;
         }
 
         // GET: api/Feeds
@@ -191,7 +193,8 @@ namespace VoteIt.Controllers.Apis
         public async Task<IActionResult> GetLikeUserList(int feedId)
         {
             var list = this._feedRepositry.GetLikeUserList(feedId);
-
+            list = this._userRepository.GetUserName(list);
+             
             return Ok(list);
         }
     }
