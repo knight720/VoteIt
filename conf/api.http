@@ -30,3 +30,5 @@ POST {{host}}/api/Feeds/UpdateLike/4
 ### Get Like User List
 GET {{host}}/api/feeds/GetLikeUserList/11
 
+### Notify
+Get {{host}}/api/Notify/Send/ValentinoRossi

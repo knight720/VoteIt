@@ -11,6 +11,7 @@ using VoteIt.Data;
 using VoteIt.Filters;
 using VoteIt.Models;
 using VoteIt.Repositories;
+using VoteIt.Services;
 
 namespace VoteIt
 {
@@ -49,6 +50,7 @@ namespace VoteIt
             //// General
             services.AddScoped<FeedRepository>();
             services.AddScoped<UserRepository>();
+            services.AddScoped<NotifyService>();
 
             //// Database
             services.AddDbContextPool<VoteItDBContext>(options =>
@@ -78,6 +80,9 @@ namespace VoteIt
                 googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
                 googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
             });
+
+            //// HttpClient
+            services.AddHttpClient();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -39,3 +39,7 @@ Scaffold-DbContext "Server=localhost;~Database=VoteItDB;User ID=[?];Password=[?]
 - [SVG Icon](https://www.flaticon.com/)
 
 - [Bootstrap popup tooltip](https://getbootstrap.com/docs/4.0/components/modal/)  
+
+- [Slack API](https://api.slack.com/apps/AEU8K3B3L/incoming-webhooks?success=1)
+
+- [HttpClientFactory](https://docs.microsoft.com/zh-tw/dotnet/standard/microservices-architecture/implement-resilient-applications/use-httpclientfactory-to-implement-resilient-http-requests)
