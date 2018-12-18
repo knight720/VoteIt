@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using VoteIt.Models;
 using VoteIt.Repositories;
+using VoteIt.Services;
 
 namespace VoteIt.Controllers.Apis
 {
@@ -18,13 +19,19 @@ namespace VoteIt.Controllers.Apis
         private readonly FeedRepository _feedRepositry;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly UserRepository _userRepository;
+        private readonly NotifyService _notifyService;
 
-        public FeedsController(VoteItDBContext context, FeedRepository feedRepository, UserManager<IdentityUser> userManager, UserRepository userRepository)
+        public FeedsController(VoteItDBContext context, 
+            FeedRepository feedRepository, 
+            UserManager<IdentityUser> userManager, 
+            UserRepository userRepository,
+            NotifyService notifyService)
         {
             this._context = context;
             this._feedRepositry = feedRepository;
             this._userManager = userManager;
             this._userRepository = userRepository;
+            this._notifyService = notifyService;
         }
 
         // GET: api/Feeds
@@ -111,6 +118,9 @@ namespace VoteIt.Controllers.Apis
 
             _context.Feed.Add(feed);
             await _context.SaveChangesAsync();
+
+            var message = $"一則來自 *{user.UserName}* 的新貼文:{Environment.NewLine}*{feed.FeedTitle}*";
+            this._notifyService.Send(message);
 
             return CreatedAtAction("GetFeed", new { id = feed.FeedId }, feed);
         }

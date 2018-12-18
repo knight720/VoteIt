@@ -1,26 +1,39 @@
 # VoteIt
 Vote It !
 
-- [Trello Kanban](https://trello.com/b/0vR0ujR0/voit-it)
+- ~~[Trello Kanban](https://trello.com/b/0vR0ujR0/voit-it)~~
+
+- [GitHub Project](https://github.com/knight720/VoteIt/projects/1)
 
 ## How to 
-- SQL Server for Docker  
-~~docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=[?]' -e 'MSSQL_PID=Express' -p 1433:1433 -v D:\Docker\VoteItDB:/var/opt/mssql -d mcr.microsoft.com/mssql/server:latest~~
+- ~~SQL Server for Docker~~ 
+```powershell
+docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=[?]' -e 'MSSQL_PID=Express' -p 1433:1433 -v D:\Docker\VoteItDB:/var/opt/mssql -d mcr.microsoft.com/mssql/server:latest
+```
 
-- Entity Framework Core DB First  
-Scaffold-DbContext "Server=localhost;~Database=VoteItDB;User ID=[?];Password=[?];" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
--Tables Feed FeedLike
--force  
+- Entity Framework Core DB First
+```powershell  
+Scaffold-DbContext "Server=localhost;~Database=VoteItDB;User ID=[?];Password=[?];" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Tables Feed FeedLike -force  
+```
 
 - [建立 LocalDB Instance](https://docs.microsoft.com/zh-tw/sql/tools/sqllocaldb-utility?view=sql-server-2017)  
-"套件管理器組控台" 執行 sqllocaldb create MSSQLLocalDB
+"套件管理器組控台" 執行 
+```powershell
+sqllocaldb create MSSQLLocalDB
+```
 
 - 重建 VoteItDB  
 "SQL Server 物件總管"連線至 (localdb)\\MSSQLLocalDB  
-執行 conf/init.sql 建立資料庫  
+執行 SQL 指令建立資料庫 
+```powershell
+conf/init.sql  
+```
 
 - [重建 ApplicationDB](https://docs.microsoft.com/zh-tw/aspnet/core/security/authentication/scaffold-identity?view=aspnetcore-2.2&tabs=visual-studio)  
-"套件管理器組控台" 執行 Update-Database -Context ApplicationDbContext  
+"套件管理器組控台" 執行 
+```powershell
+Update-Database -Context ApplicationDbContext  
+```
 
 ## Rference
 - [reddit](https://zh.wikipedia.org/wiki/Reddit)
@@ -29,17 +42,28 @@ Scaffold-DbContext "Server=localhost;~Database=VoteItDB;User ID=[?];Password=[?]
 
 - [dotnet folder structure](https://github.com/dotnet/project-system)
 
-- [Connection Strings](https://docs.microsoft.com/en-us/ef/core/miscellaneous/connection-strings)
+- MSDN
 
-- [Secret Manager(開發階段)](https://docs.microsoft.com/zh-tw/aspnet/core/security/app-secrets?view=aspnetcore-2.2&tabs=windows)  
-%APPDATA%\Microsoft\UserSecrets\<user_secrets_id>\secrets.json
+    - [Connection Strings](https://docs.microsoft.com/en-us/ef/core/miscellaneous/connection-strings)
 
-- [[ASP.NET Core] Identity - Part 1 使用 Google 登入](https://blog.kevinyang.net/2018/05/31/aspnet-core-identity/)
+    - [Secret Manager(開發階段)](https://docs.microsoft.com/zh-tw/aspnet/core/security/app-secrets?view=aspnetcore-2.2&tabs=windows)  
+        ```powershell
+        %APPDATA%\Microsoft\UserSecrets\<user_secrets_id>\secrets.json
+        ```
+
+    - [[ASP.NET Core] Identity - Part 1 使用 Google 登入](https://blog.kevinyang.net/2018/05/31/aspnet-core-identity/)
+
+    - [HttpClientFactory](https://docs.microsoft.com/zh-tw/dotnet/standard/microservices-architecture/implement-resilient-applications/use-httpclientfactory-to-implement-resilient-http-requests)
 
 - [SVG Icon](https://www.flaticon.com/)
 
-- [Bootstrap popup tooltip](https://getbootstrap.com/docs/4.0/components/modal/)  
+- Bootstrap
 
-- [Slack API](https://api.slack.com/apps/AEU8K3B3L/incoming-webhooks?success=1)
+    - [Modal (popup tooltip)](https://getbootstrap.com/docs/4.0/components/modal/)  
 
-- [HttpClientFactory](https://docs.microsoft.com/zh-tw/dotnet/standard/microservices-architecture/implement-resilient-applications/use-httpclientfactory-to-implement-resilient-http-requests)
+- Slack API
+
+    - [Your Apps](https://api.slack.com/apps)
+
+    - [Incoming Webhooks](https://api.slack.com/apps/AEU8K3B3L/incoming-webhooks?success=1)
+
