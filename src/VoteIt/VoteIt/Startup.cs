@@ -51,6 +51,7 @@ namespace VoteIt
             services.AddScoped<FeedRepository>();
             services.AddScoped<UserRepository>();
             services.AddScoped<NotifyService>();
+            services.AddScoped<FeedService>();
 
             //// Database
             services.AddDbContextPool<VoteItDBContext>(options =>

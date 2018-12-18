@@ -20,18 +20,21 @@ namespace VoteIt.Controllers.Apis
         private readonly UserManager<IdentityUser> _userManager;
         private readonly UserRepository _userRepository;
         private readonly NotifyService _notifyService;
+        private readonly FeedService _feedService;
 
         public FeedsController(VoteItDBContext context, 
             FeedRepository feedRepository, 
             UserManager<IdentityUser> userManager, 
             UserRepository userRepository,
-            NotifyService notifyService)
+            NotifyService notifyService,
+            FeedService feedService)
         {
             this._context = context;
             this._feedRepositry = feedRepository;
             this._userManager = userManager;
             this._userRepository = userRepository;
             this._notifyService = notifyService;
+            this._feedService = feedService;
         }
 
         // GET: api/Feeds
@@ -119,7 +122,7 @@ namespace VoteIt.Controllers.Apis
             _context.Feed.Add(feed);
             await _context.SaveChangesAsync();
 
-            var message = $"一則來自 *{user.UserName}* 的新貼文:{Environment.NewLine}*{feed.FeedTitle}*";
+            var message = $"*{user.UserName}* 的新貼文:{Environment.NewLine}*{feed.FeedTitle}*";
             this._notifyService.Send(message);
 
             return CreatedAtAction("GetFeed", new { id = feed.FeedId }, feed);
@@ -189,6 +192,8 @@ namespace VoteIt.Controllers.Apis
                 feedLike.FeedLikeValidFlag = true;
 
                 this._feedRepositry.CreateFeedLike(feedLike);
+
+                this._feedService.IsTop(feedId);
             }
 
             return Ok(message);

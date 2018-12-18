@@ -26,7 +26,7 @@ sqllocaldb create MSSQLLocalDB
 "SQL Server 物件總管"連線至 (localdb)\\MSSQLLocalDB  
 執行 SQL 指令建立資料庫 
 ```powershell
-conf/init.sql  
+conf/VoteItDB.sql  
 ```
 
 - [重建 ApplicationDB](https://docs.microsoft.com/zh-tw/aspnet/core/security/authentication/scaffold-identity?view=aspnetcore-2.2&tabs=visual-studio)  
@@ -42,7 +42,7 @@ Update-Database -Context ApplicationDbContext
 
 - [dotnet folder structure](https://github.com/dotnet/project-system)
 
-- MSDN
+- Microsoft Docs
 
     - [Connection Strings](https://docs.microsoft.com/en-us/ef/core/miscellaneous/connection-strings)
 
@@ -54,6 +54,10 @@ Update-Database -Context ApplicationDbContext
     - [[ASP.NET Core] Identity - Part 1 使用 Google 登入](https://blog.kevinyang.net/2018/05/31/aspnet-core-identity/)
 
     - [HttpClientFactory](https://docs.microsoft.com/zh-tw/dotnet/standard/microservices-architecture/implement-resilient-applications/use-httpclientfactory-to-implement-resilient-http-requests)
+
+    - [在 ASP.NET Core 中使用託管服務的背景工作](https://docs.microsoft.com/zh-tw/aspnet/core/fundamentals/host/hosted-services?view=aspnetcore-2.2)
+
+    - [在微服務中使用 IHostedService 和 BackgroundService 類別實作背景工作](https://docs.microsoft.com/zh-tw/dotnet/standard/microservices-architecture/multi-container-microservice-net-applications/background-tasks-with-ihostedservice)
 
 - [SVG Icon](https://www.flaticon.com/)
 
@@ -67,3 +71,6 @@ Update-Database -Context ApplicationDbContext
 
     - [Incoming Webhooks](https://api.slack.com/apps/AEU8K3B3L/incoming-webhooks?success=1)
 
+- Google
+
+    - [Google API Console](https://console.developers.google.com)

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using VoteIt.Models;
 
@@ -18,6 +19,12 @@ namespace VoteIt.Repositories
             var feed = this._context.Feed.Where(i => i.FeedId == feedId).FirstOrDefault();
             feed.FeedLike++;
             this._context.SaveChanges();
+        }
+
+        public Feed GetFeed(int feedId)
+        {
+            var feed = this._context.Feed.Where(i => i.FeedId == feedId).FirstOrDefault();
+            return feed;
         }
 
         public void CreateFeedLike(FeedLike feedLike)
