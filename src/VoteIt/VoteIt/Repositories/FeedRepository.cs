@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Identity;
 using VoteIt.Models;
 
 namespace VoteIt.Repositories
@@ -8,10 +8,13 @@ namespace VoteIt.Repositories
     public class FeedRepository
     {
         private VoteItDBContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public FeedRepository(VoteItDBContext context)
+        public FeedRepository(VoteItDBContext context,
+            UserManager<IdentityUser> userManager)
         {
             this._context = context;
+            this._userManager = userManager;
         }
 
         public void UpdateLike(int feedId)
@@ -24,6 +27,13 @@ namespace VoteIt.Repositories
         public Feed GetFeed(int feedId)
         {
             var feed = this._context.Feed.Where(i => i.FeedId == feedId).FirstOrDefault();
+
+            var user = this._userManager.FindByEmailAsync(feed.FeedCreatedUser);
+            if (user.Result != null)
+            {
+                feed.FeedCreatedUser = user.Result.UserName;
+            }
+
             return feed;
         }
 
@@ -81,6 +91,16 @@ namespace VoteIt.Repositories
                 })
                 .ToList();
 
+            //// Email to UserName
+            foreach (var i in feedList)
+            {
+                var user = this._userManager.FindByEmailAsync(i.FeedCreatedUser);
+                if (user.Result != null)
+                {
+                    i.FeedCreatedUser = user.Result.UserName;
+                }
+            }
+
             return feedList;
         }
 
@@ -107,6 +127,24 @@ namespace VoteIt.Repositories
                 .ToList();
 
             return result;
+        }
+
+        /// <summary>
+        /// 最大 Like 數
+        /// </summary>
+        /// <returns></returns>
+        public int MaxLike()
+        {
+            var feedLikeCount = this._context.FeedLike.GroupBy(fl => fl.FeedLikeFeedId)
+                .Select(fl => new
+                {
+                    FeedLike_FeedId = fl.Key,
+                    FeedLike_Count = fl.Count()
+                })
+                .OrderByDescending(i => i.FeedLike_Count)
+                .FirstOrDefault();
+
+            return feedLikeCount.FeedLike_Count;
         }
     }
 }

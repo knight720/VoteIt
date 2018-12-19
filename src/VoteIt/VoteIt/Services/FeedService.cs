@@ -27,17 +27,15 @@ namespace VoteIt.Services
         /// </summary>
         /// <param name="feedId"></param>
         /// <returns></returns>
-        public async Task<bool> IsTop(int feedId)
+        public bool IsTop(int feedId)
         {
             var currentFeed = this._feedRepository.GetFeed(feedId);
-            var topFeed = this._feedRepository.GetFeedListWithFeedLikeOrderByLike().FirstOrDefault();
+            var maxLike = this._feedRepository.MaxLike();
 
-            var isTop = currentFeed.FeedLike == topFeed.FeedLike;
+            var isTop = currentFeed.FeedLike == maxLike;
             if (isTop)
             {
-                var user = await this._userManager.FindByEmailAsync(currentFeed.FeedCreatedUser);
-
-                string message = $"*{user.UserName}* 的貼文，獲得最多 Like:{Environment.NewLine}*{currentFeed.FeedTitle}*";
+                string message = $"*{currentFeed.FeedCreatedUser}* 的貼文，獲得最多 Like:{Environment.NewLine}*{currentFeed.FeedTitle}*";
                 this._notifyService.Send(message);
             }
             return isTop;
