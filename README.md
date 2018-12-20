@@ -74,3 +74,7 @@ Update-Database -Context ApplicationDbContext
 - Google
 
     - [Google API Console](https://console.developers.google.com)
+
+- ASP.NET Core
+
+    - [Cannot Consume Scoped Service From Singleton – A Lesson In ASP.net Core DI Scopes](https://dotnetcoretutorials.com/2018/03/20/cannot-consume-scoped-service-from-singleton-a-lesson-in-asp-net-core-di-scopes/)

@@ -7,7 +7,7 @@ using VoteIt.Repositories;
 
 namespace VoteIt.Services
 {
-    public class FeedService
+    public class FeedService : IScopedProcessingService
     {
         private readonly FeedRepository _feedRepository;
         private readonly NotifyService _notifyService;
@@ -39,6 +39,19 @@ namespace VoteIt.Services
                 this._notifyService.Send(message);
             }
             return isTop;
+        }
+
+        public void HotFeed()
+        {
+            var startDate = DateTime.Now;
+            var feedList = this._feedRepository.GetFeedList()
+                .Where(i => i.FeedCreatedDateTime > startDate)
+                .Take(3);
+        }
+
+        public void DoWork()
+        {
+            this.HotFeed();
         }
     }
 }

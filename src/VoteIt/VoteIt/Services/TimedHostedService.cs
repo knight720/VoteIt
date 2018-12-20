@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
@@ -11,10 +12,13 @@ namespace VoteIt.Services
     {
         private readonly ILogger _logger;
         private Timer _timer;
+        private IServiceProvider _serviceProvider;
 
-        public TimedHostedService(ILogger<TimedHostedService> logger)
+        public TimedHostedService(ILogger<TimedHostedService> logger,
+            IServiceProvider serviceProvider)
         {
             _logger = logger;
+            this._serviceProvider = serviceProvider;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -30,6 +34,15 @@ namespace VoteIt.Services
         private void DoWork(object state)
         {
             _logger.LogInformation("Timed Background Service is working.");
+
+            using (var scope = this._serviceProvider.CreateScope())
+            {
+                var scopedProcessingService =
+                    scope.ServiceProvider
+                        .GetRequiredService<IScopedProcessingService>();
+
+                scopedProcessingService.DoWork();
+            }
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
