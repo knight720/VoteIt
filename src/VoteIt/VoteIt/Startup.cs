@@ -52,6 +52,7 @@ namespace VoteIt
             services.AddScoped<UserRepository>();
             services.AddScoped<NotifyService>();
             services.AddScoped<FeedService>();
+            services.AddScoped<ReportService>();
 
             //// Database
             services.AddDbContextPool<VoteItDBContext>(options =>
@@ -87,7 +88,7 @@ namespace VoteIt
 
             //// Host
             services.AddHostedService<TimedHostedService>();
-            services.AddScoped<IScopedProcessingService, FeedService>();
+            services.AddScoped<IScopedProcessingService, ReportService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

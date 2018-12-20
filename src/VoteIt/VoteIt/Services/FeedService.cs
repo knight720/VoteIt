@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using VoteIt.Enums;
 using VoteIt.Repositories;
 
 namespace VoteIt.Services
 {
-    public class FeedService : IScopedProcessingService
+    public class FeedService
     {
         private readonly FeedRepository _feedRepository;
         private readonly NotifyService _notifyService;
@@ -45,7 +44,7 @@ namespace VoteIt.Services
         /// <summary>
         /// 熱門排行
         /// </summary>
-        public void HotFeed()
+        public void HotFeed(ReportEnum report)
         {
             var startDate = DateTime.Now.AddMonths(-1);
             var feedList = this._feedRepository.GetFeedListWithFeedLike()
@@ -64,9 +63,11 @@ namespace VoteIt.Services
             this._notifyService.Send(stringBuilder.ToString());
         }
 
-        public void DoWork()
-        {
-            this.HotFeed();
-        }
+        //private ValueTuple<DateTime, DateTime> GetSpan(DateTime now)
+        //{
+        //    DateTime startDateTime, endDateTime;
+
+        //    return new ValueTuple(startDateTime, endDateTime);
+        //}
     }
 }
