@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using VoteIt.Repositories;
@@ -41,12 +42,26 @@ namespace VoteIt.Services
             return isTop;
         }
 
+        /// <summary>
+        /// 熱門排行
+        /// </summary>
         public void HotFeed()
         {
-            var startDate = DateTime.Now;
-            var feedList = this._feedRepository.GetFeedList()
+            var startDate = DateTime.Now.AddMonths(-1);
+            var feedList = this._feedRepository.GetFeedListWithFeedLike()
                 .Where(i => i.FeedCreatedDateTime > startDate)
+                .OrderByDescending(i => i.FeedLike)
                 .Take(3);
+
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.AppendLine("本月 TOP *3*");
+
+            foreach (var i in feedList)
+            {
+                stringBuilder.AppendLine($"{i.FeedTitle}, {i.FeedCreatedUser} {i.FeedCreatedDateTime}");
+            }
+
+            this._notifyService.Send(stringBuilder.ToString());
         }
 
         public void DoWork()

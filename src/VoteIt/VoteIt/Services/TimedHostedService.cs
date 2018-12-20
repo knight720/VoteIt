@@ -7,12 +7,13 @@ using Microsoft.Extensions.Logging;
 
 namespace VoteIt.Services
 {
-    #region snippet1
     internal class TimedHostedService : IHostedService, IDisposable
     {
         private readonly ILogger _logger;
         private Timer _timer;
         private IServiceProvider _serviceProvider;
+        private int _maxDoCount = 1;
+        private int _doCount = 0;
 
         public TimedHostedService(ILogger<TimedHostedService> logger,
             IServiceProvider serviceProvider)
@@ -25,7 +26,7 @@ namespace VoteIt.Services
         {
             _logger.LogInformation("Timed Background Service is starting.");
 
-            _timer = new Timer(DoWork, null, TimeSpan.Zero, 
+            _timer = new Timer(DoWork, null, TimeSpan.Zero,
                 TimeSpan.FromSeconds(5));
 
             return Task.CompletedTask;
@@ -34,6 +35,12 @@ namespace VoteIt.Services
         private void DoWork(object state)
         {
             _logger.LogInformation("Timed Background Service is working.");
+
+            this._doCount++;
+            if (this._doCount > this._maxDoCount)
+            {
+                return;
+            }
 
             using (var scope = this._serviceProvider.CreateScope())
             {
@@ -59,5 +66,4 @@ namespace VoteIt.Services
             _timer?.Dispose();
         }
     }
-    #endregion
 }
