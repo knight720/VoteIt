@@ -76,21 +76,44 @@ namespace VoteIt.Services
         {
             this._logger.LogInformation("report:{0}", report.ToString());
 
-            var result = (startDateTime: DateTime.MinValue, endDateTime: DateTime.MinValue);
+            DateTime start = DateTime.MinValue;
+            DateTime end = DateTime.MinValue;
 
             if (report == ReportEnum.Weekly)
             {
+                //// 星期一
                 var week = (int)now.DayOfWeek;
-                var end = now.AddDays(-week);
-                var start = end.AddDays(-7);
+                end = now.AddDays(-week);
+                start = end.AddDays(-7);
                 end = new DateTime(end.Year, end.Month, end.Day, 23, 59, 59);
-
-                result.startDateTime = start;
-                result.endDateTime = end;
+            }
+            else if (report == ReportEnum.Monthly)
+            {
+                //// 每月 1號
+                start = now.AddMonths(-1);
+                start = new DateTime(start.Year, start.Month, 1);
+                var endDay = DateTime.DaysInMonth(start.Year, start.Month);
+                end = new DateTime(start.Year, start.Month, endDay, 23, 59, 59);
+            }
+            else if (report == ReportEnum.Quarterly)
+            {
+                //// 1, 4, 7, 10月 1號
+                start = now.AddMonths(-3);
+                start = new DateTime(start.Year, start.Month, 1);
+                end = now.AddMonths(-1);
+                var endDay = DateTime.DaysInMonth(end.Year, end.Month);
+                end = new DateTime(end.Year, end.Month, endDay, 23, 59, 59);
+            }
+            else if (report == ReportEnum.Yearly)
+            {
+                //// 1月 1號
+                start = now.AddYears(-1);
+                start = new DateTime(start.Year, 1, 1);
+                end = new DateTime(start.Year, 12, 31, 23, 59, 59);
             }
 
-            this._logger.LogInformation("Time: {0} ~ {1}", report, result.startDateTime, result.endDateTime);
-            return result;
+            this._logger.LogInformation("Time: {0} ~ {1}", report, start, end);
+            return (startDateTime: start, endDateTime: end);
         }
     }
 }

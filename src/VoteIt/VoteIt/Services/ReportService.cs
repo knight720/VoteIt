@@ -22,6 +22,7 @@ namespace VoteIt.Services
         {
             var now = DateTime.Now;
 
+            //// 每天中午發送一次(11:55 ~ 12:05)
             if (IsOnTime(now) == false)
             {
                 return;
@@ -31,17 +32,20 @@ namespace VoteIt.Services
             if (now.Month == 1 &&
                 now.Day == 1)
             {
+                this._feedService.HotFeed(ReportEnum.Yearly);
             }
 
             //// 季報
-            if (now.Month % 3 == 0 &&
+            if (now.Month % 3 == 1 &&
                 now.Day == 1)
             {
+                this._feedService.HotFeed(ReportEnum.Quarterly);
             }
 
             /// 月報
             if (now.Day == 1)
             {
+                this._feedService.HotFeed(ReportEnum.Monthly);
             }
 
             //// 週報
