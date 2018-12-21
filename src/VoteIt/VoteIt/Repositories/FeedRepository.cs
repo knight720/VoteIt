@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Identity;
 using VoteIt.Models;
@@ -92,7 +93,54 @@ namespace VoteIt.Repositories
                 .ToList();
 
             //// Email to UserName
-            foreach (var i in feedList)
+            ReplaceCreateUser(feedList);
+
+            return feedList;
+        }
+
+        /// <summary>
+        /// 根據時間由 FeedLike 統計 Like 數
+        /// </summary>
+        /// <returns></returns>
+        public List<Feed> GetFeedListWithFeedLike(DateTime start, DateTime end)
+        {
+            var feedLikeCount = this._context.FeedLike
+                .Where(fl => 
+                    fl.FeedLikeCreatedDateTime >= start &&
+                    fl.FeedLikeCreatedDateTime <= end)
+                .GroupBy(fl => fl.FeedLikeFeedId)
+                .Select(fl => new
+                {
+                    FeedLike_FeedId = fl.Key,
+                    FeedLike_Count = fl.Count()
+                });
+
+            var feedList = this._context.Feed.GroupJoin(
+                feedLikeCount,
+                f => f.FeedId,
+                l => l.FeedLike_FeedId,
+                (f, flc) => new Feed
+                {
+                    FeedId = f.FeedId,
+                    FeedTitle = f.FeedTitle,
+                    FeedCreatedDateTime = f.FeedCreatedDateTime,
+                    FeedCreatedUser = f.FeedCreatedUser,
+                    FeedLike = flc.Count() > 0 ? flc.First().FeedLike_Count : 0
+                })
+                .ToList();
+
+            //// Email to UserName
+            ReplaceCreateUser(feedList);
+
+            return feedList;
+        }
+
+        /// <summary>
+        /// Email to UserName
+        /// </summary>
+        private void ReplaceCreateUser(List<Feed> list)
+        {
+            foreach (var i in list)
             {
                 var user = this._userManager.FindByEmailAsync(i.FeedCreatedUser);
                 if (user.Result != null)
@@ -100,8 +148,6 @@ namespace VoteIt.Repositories
                     i.FeedCreatedUser = user.Result.UserName;
                 }
             }
-
-            return feedList;
         }
 
         public List<Feed> GetFeedListWithFeedLikeOrderByLike()

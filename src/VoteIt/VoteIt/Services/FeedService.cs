@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
 using VoteIt.Enums;
 using VoteIt.Repositories;
 
@@ -12,14 +13,17 @@ namespace VoteIt.Services
         private readonly FeedRepository _feedRepository;
         private readonly NotifyService _notifyService;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly ILogger _logger;
 
         public FeedService(FeedRepository feedRepository,
             NotifyService notifyService,
-            UserManager<IdentityUser> userManager)
+            UserManager<IdentityUser> userManager,
+            ILogger<FeedService> logger)
         {
             this._feedRepository = feedRepository;
             this._notifyService = notifyService;
             this._userManager = userManager;
+            this._logger = logger;
         }
 
         /// <summary>
@@ -46,14 +50,14 @@ namespace VoteIt.Services
         /// </summary>
         public void HotFeed(ReportEnum report)
         {
-            var startDate = DateTime.Now.AddMonths(-1);
-            var feedList = this._feedRepository.GetFeedListWithFeedLike()
-                .Where(i => i.FeedCreatedDateTime > startDate)
+            var span = this.GetSpan(DateTime.Now, report);
+
+            var feedList = this._feedRepository.GetFeedListWithFeedLike(span.startDateTime, span.endDateTime)
                 .OrderByDescending(i => i.FeedLike)
                 .Take(3);
 
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.AppendLine("本月 TOP *3*");
+            stringBuilder.AppendLine($"本周 TOP *{feedList.Count()}*");
 
             foreach (var i in feedList)
             {
@@ -63,11 +67,30 @@ namespace VoteIt.Services
             this._notifyService.Send(stringBuilder.ToString());
         }
 
-        //private ValueTuple<DateTime, DateTime> GetSpan(DateTime now)
-        //{
-        //    DateTime startDateTime, endDateTime;
+        /// <summary>
+        /// 取得起訖時間
+        /// </summary>
+        /// <param name="now"></param>
+        /// <returns></returns>
+        private (DateTime startDateTime, DateTime endDateTime) GetSpan(DateTime now, ReportEnum report)
+        {
+            this._logger.LogInformation("report:{0}", report.ToString());
 
-        //    return new ValueTuple(startDateTime, endDateTime);
-        //}
+            var result = (startDateTime: DateTime.MinValue, endDateTime: DateTime.MinValue);
+
+            if (report == ReportEnum.Weekly)
+            {
+                var week = (int)now.DayOfWeek;
+                var end = now.AddDays(-week);
+                var start = end.AddDays(-7);
+                end = new DateTime(end.Year, end.Month, end.Day, 23, 59, 59);
+
+                result.startDateTime = start;
+                result.endDateTime = end;
+            }
+
+            this._logger.LogInformation("Time: {0} ~ {1}", report, result.startDateTime, result.endDateTime);
+            return result;
+        }
     }
 }
