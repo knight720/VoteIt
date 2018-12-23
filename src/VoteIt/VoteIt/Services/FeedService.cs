@@ -98,9 +98,11 @@ namespace VoteIt.Services
             else if (report == ReportEnum.Quarterly)
             {
                 //// 1, 4, 7, 10月 1號
-                start = now.AddMonths(-3);
+                var mod = now.Month % 3;
+                mod = (mod == 0) ? 3 : mod;
+                end = now.AddMonths(-mod);
+                start = end.AddMonths(-2);
                 start = new DateTime(start.Year, start.Month, 1);
-                end = now.AddMonths(-1);
                 var endDay = DateTime.DaysInMonth(end.Year, end.Month);
                 end = new DateTime(end.Year, end.Month, endDay, 23, 59, 59);
             }
