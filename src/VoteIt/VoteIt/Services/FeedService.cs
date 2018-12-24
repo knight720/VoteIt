@@ -50,6 +50,7 @@ namespace VoteIt.Services
         /// </summary>
         public void HotFeed(ReportEnum report)
         {
+			var title = "上週";
             var span = this.GetSpan(DateTime.Now, report);
 
             var feedList = this._feedRepository.GetFeedListWithFeedLike(span.startDateTime, span.endDateTime)
@@ -57,11 +58,11 @@ namespace VoteIt.Services
                 .Take(3);
 
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.AppendLine($"本周 TOP *{feedList.Count()}*");
+            stringBuilder.AppendLine($"{title} TOP *{feedList.Count()}*");
 
             foreach (var i in feedList)
             {
-                stringBuilder.AppendLine($"{i.FeedTitle}, {i.FeedCreatedUser} {i.FeedCreatedDateTime}");
+                stringBuilder.AppendLine($"{i.FeedTitle}, {i.FeedCreatedUser} {i.FeedCreatedDateTime.ToString("yyyy/MM/dd HH:mm")}");
             }
 
             this._notifyService.Send(stringBuilder.ToString());

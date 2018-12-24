@@ -13,6 +13,11 @@
     </div>
 </p>
 
+<div class="btn-group pull-right btn-sort" role="group" aria-label="Basic example">
+    <button type="button" class="btn btn-danger">New</button>
+    <button type="button" class="btn btn-danger">Like</button>
+</div>
+
 <table class="table">
     <tbody>
         @foreach (var item in Model)
@@ -55,7 +60,7 @@
                             <div class="text-danger"></div>
                             <div class="form-group">
                                 我覺得...
-                                <textarea  id="feedTitle" class="form-control"></textarea>
+                                <textarea id="feedTitle" class="form-control"></textarea>
                                 <span class="text-danger"></span>
                             </div>
                         </form>

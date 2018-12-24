@@ -63,7 +63,7 @@ namespace VoteIt.Services
         private bool IsOnTime(DateTime now)
         {
             TimeSpan timeSpan;
-            if (_lastNotifyTime != null)
+            if (_lastNotifyTime > DateTime.MinValue)
             {
                 timeSpan = now.Subtract(_lastNotifyTime);
 

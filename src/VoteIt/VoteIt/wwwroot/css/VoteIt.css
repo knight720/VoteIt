@@ -87,3 +87,7 @@ body {
 .btn-danger {
     background-color: #e7462b;
 }
+
+.btn-sort {
+    margin-bottom: 1em;
+}
