@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Identity;
+using VoteIt.Enums;
 using VoteIt.Models;
 
 namespace VoteIt.Repositories
@@ -55,7 +56,22 @@ namespace VoteIt.Repositories
 
         public List<Feed> GetFeedList()
         {
-            var list = this._context.Feed.ToList(); ;
+            var list = this._context.Feed.OrderByDescending(i => i.FeedCreatedDateTime).ToList(); ;
+            return list;
+        }
+
+        public List<Feed> GetFeedList(SortEnum sortEnum)
+        {
+            List<Feed> list = new List<Feed>();
+            if (sortEnum == SortEnum.New)
+            {
+                list = this.GetFeedListWithFeedLikeOrderByDate();
+            }
+            else if (sortEnum == SortEnum.Like)
+            {
+                list = this.GetFeedListWithFeedLikeOrderByLike();
+            }
+
             return list;
         }
 
@@ -105,7 +121,7 @@ namespace VoteIt.Repositories
         public List<Feed> GetFeedListWithFeedLike(DateTime start, DateTime end)
         {
             var feedLikeCount = this._context.FeedLike
-                .Where(fl => 
+                .Where(fl =>
                     fl.FeedLikeCreatedDateTime >= start &&
                     fl.FeedLikeCreatedDateTime <= end)
                 .GroupBy(fl => fl.FeedLikeFeedId)
@@ -155,6 +171,15 @@ namespace VoteIt.Repositories
             var feedList = this.GetFeedListWithFeedLike()
                 .OrderByDescending(i => i.FeedLike)
                 .ThenBy(i => i.FeedCreatedDateTime)
+                .ToList();
+
+            return feedList;
+        }
+
+        public List<Feed> GetFeedListWithFeedLikeOrderByDate()
+        {
+            var feedList = this.GetFeedListWithFeedLike()
+                .OrderByDescending(i => i.FeedCreatedDateTime)
                 .ToList();
 
             return feedList;

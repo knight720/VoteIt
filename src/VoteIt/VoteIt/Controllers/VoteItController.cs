@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using VoteIt.Enums;
 using VoteIt.Models;
 using VoteIt.Repositories;
 
@@ -22,10 +23,9 @@ namespace VoteIt.Controllers
         }
 
         // GET: VoteIt
-        public ActionResult Index()
+        public ActionResult Index(SortEnum sort = SortEnum.New)
         {
-            List<Feed> list = this._feedRepository.GetFeedListWithFeedLikeOrderByLike();
-
+            List<Feed> list = this._feedRepository.GetFeedList(sort);
             return View(list);
         }
 
