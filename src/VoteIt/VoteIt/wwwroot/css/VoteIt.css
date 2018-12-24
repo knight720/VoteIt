@@ -73,7 +73,7 @@ body {
 
 .create-new {
     display: inline-block;
-    position: absolute;
+    position: fixed;
     right: 10%;
     bottom: 10%;
     z-index: 505;
