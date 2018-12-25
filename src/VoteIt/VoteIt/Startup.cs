@@ -37,7 +37,7 @@ namespace VoteIt
             services.AddMvc(config =>
                 config.Filters.Add(new AuthorizationFilter())
                 )
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddRazorPagesOptions(options =>
             {
                 options.AllowAreas = true;
