@@ -56,6 +56,7 @@ Update-Database -Context ApplicationDbContext
     - [HttpClientFactory](https://docs.microsoft.com/zh-tw/dotnet/standard/microservices-architecture/implement-resilient-applications/use-httpclientfactory-to-implement-resilient-http-requests)
 
     - [在 ASP.NET Core 中使用託管服務的背景工作](https://docs.microsoft.com/zh-tw/aspnet/core/fundamentals/host/hosted-services?view=aspnetcore-2.2)
+    Docs/aspnetcore/fundamentals/host/hosted-services/samples/2.x/BackgroundTasksSample-WebHost/
 
     - [在微服務中使用 IHostedService 和 BackgroundService 類別實作背景工作](https://docs.microsoft.com/zh-tw/dotnet/standard/microservices-architecture/multi-container-microservice-net-applications/background-tasks-with-ihostedservice)
 
