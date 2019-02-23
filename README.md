@@ -72,6 +72,9 @@ Update-Database -Context ApplicationDbContext
 
     - [Incoming Webhooks](https://api.slack.com/apps/AEU8K3B3L/incoming-webhooks?success=1)
 
+    - [Deep linking into Slack clients](https://api.slack.com/docs/deep-linking)  
+    由 Web 開啟 Slack Channel
+
 - Google
 
     - [Google API Console](https://console.developers.google.com)
