@@ -82,3 +82,9 @@ Update-Database -Context ApplicationDbContext
 - ASP.NET Core
 
     - [Cannot Consume Scoped Service From Singleton – A Lesson In ASP.net Core DI Scopes](https://dotnetcoretutorials.com/2018/03/20/cannot-consume-scoped-service-from-singleton-a-lesson-in-asp-net-core-di-scopes/)
+
+- SQLite
+
+    - [DB Browser for SQLite](http://sqlitebrowser.org/)
+
+    - [DbVisualizer](https://www.dbvis.com)
