@@ -55,11 +55,25 @@ namespace VoteIt
             services.AddScoped<ReportService>();
 
             //// Database
-            services.AddDbContextPool<VoteItDBContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("VoteItDBDatabase")));
 
-            var option = new DbContextOptionsBuilder().UseSqlServer(Configuration.GetConnectionString("VoteItDBDatabase")).Options;
-            services.AddSingleton(option).AddScoped<VoteItDBContext>();
+            var useSQLite = bool.Parse(Configuration["UseSQLite"]);
+
+            if (useSQLite)
+            {
+                services.AddDbContextPool<VoteItDBContext>(options =>
+                    options.UseSqlite(Configuration.GetConnectionString("VoteItDB.sqlite")));
+
+                var option = new DbContextOptionsBuilder().UseSqlite(Configuration.GetConnectionString("VoteItDB.sqlite")).Options;
+                services.AddSingleton(option).AddScoped<VoteItDBContext>();
+            }
+            else
+            {
+                services.AddDbContextPool<VoteItDBContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("VoteItDBDatabase")));
+
+                var option = new DbContextOptionsBuilder().UseSqlServer(Configuration.GetConnectionString("VoteItDBDatabase")).Options;
+                services.AddSingleton(option).AddScoped<VoteItDBContext>();
+            }
 
             //// Auth
             services.AddIdentity<IdentityUser, IdentityRole>(options =>

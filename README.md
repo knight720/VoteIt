@@ -88,3 +88,5 @@ Update-Database -Context ApplicationDbContext
     - [DB Browser for SQLite](http://sqlitebrowser.org/)
 
     - [DbVisualizer](https://www.dbvis.com)
+
+    - [SQLite & SQL Server Compact Toolbox](https://github.com/ErikEJ/SqlCeToolbox)
