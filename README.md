@@ -34,6 +34,8 @@ conf/VoteItDB.sql
 ```powershell
 Update-Database -Context ApplicationDbContext  
 ```
+- UseSQLite = true
+複製 data\VoteItDB.sqlite 並更名 VoteItDB.sqlite.user
 
 ## Rference
 - [reddit](https://zh.wikipedia.org/wiki/Reddit)
