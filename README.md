@@ -5,7 +5,19 @@ Vote It !
 
 - [GitHub Project](https://github.com/knight720/VoteIt/projects/1)
 
-## How to 
+## How to
+### Run on docker
+1. Change directory  
+`cd .\build\` 
+2. Build docker image  
+`docker build --tag knight/voteit .`
+3. Run docker image  
+`docker run --rm -it -p 8080:80 knight/voteit`
+4. Browser voteit  
+`http://localhost:8080/voiteit`
+
+### Initialize Database
+
 - ~~SQL Server for Docker~~ 
 ```powershell
 docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=[?]' -e 'MSSQL_PID=Express' -p 1433:1433 -v D:\Docker\VoteItDB:/var/opt/mssql -d mcr.microsoft.com/mssql/server:latest
