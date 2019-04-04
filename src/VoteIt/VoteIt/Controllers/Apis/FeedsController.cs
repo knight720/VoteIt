@@ -212,5 +212,12 @@ namespace VoteIt.Controllers.Apis
              
             return Ok(list);
         }
+
+        [HttpGet("Count")]
+        public async Task<IActionResult> GetFeedCount()
+        {
+            var count = this._feedRepositry.FeedCount();
+            return Ok(count);
+        }
     }
 }

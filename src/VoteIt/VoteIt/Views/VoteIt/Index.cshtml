@@ -18,6 +18,12 @@
     <a asp-action="Index" asp-route-sort="Like"><button type="button" class="btn btn-danger">Like</button></a>
 </div>
 
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        <li class="active"><a href="#">1</a></li>
+    </ul>
+</nav>
+
 <table class="table">
     <tbody>
         @foreach (var item in Model)
@@ -99,6 +105,12 @@
 
 @section Scripts {
     <script>
+        //// Page Load
+        $(function() {
+            getFeedCount();
+
+        });
+
         //// 新增 like
         function like(id) {
             let url = window.location.origin + '/api/feeds/createlike/' + id;
@@ -187,6 +199,40 @@
             element.innerHTML = message;
 
             $('#modal-alert').modal({ 'show': true })
+        }
+
+        //// 取得 Feeds Count
+        function getFeedCount() {
+            let url = window.location.origin + '/api/Feeds/Count';
+            var request = new XMLHttpRequest();
+            request.open('GET', url, true);
+            request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            request.onload = function () {
+                console.log(this.status);
+                if (request.status >= 200 && request.status < 400) {
+                    console.log('success');
+                    console.log(this.responseText);
+
+                    let item = document.getElementsByClassName("pagination");
+
+                    let feedCount = Number(request.response);
+                    feedCount = 53; //TODO delete
+                    let feedPage = 10;
+                    let pageCount = Math.ceil(feedCount / feedPage);
+                    let message = '';
+                    for (i = 1; i <= pageCount; i++) {
+                        message += "<li><a href=\"#\">" + i + "</a></li>";
+                    }
+
+                    item[0].innerHTML = message;
+                } else if (request.status == 401) {
+                    showAlert('Login first!');
+                } else {
+                    console.log('error');
+                    showAlert(request.status);
+                }
+            };
+            request.send();
         }
     </script>
 }

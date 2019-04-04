@@ -217,5 +217,14 @@ namespace VoteIt.Repositories
 
             return feedLikeCount.FeedLike_Count;
         }
+
+        /// <summary>
+        /// Feed Count
+        /// </summary>
+        /// <returns></returns>
+        public int FeedCount()
+        {
+            return this._context.Feed.Count();
+        }
     }
 }
