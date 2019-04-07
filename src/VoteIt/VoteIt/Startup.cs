@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -45,8 +44,6 @@ namespace VoteIt
                 options.Conventions.AuthorizeAreaPage("Identity", "/Account/Logout");
             });
 
-            services.AddEntityFrameworkSqlServer();
-
             //// General
             services.AddScoped<FeedRepository>();
             services.AddScoped<UserRepository>();
@@ -60,14 +57,26 @@ namespace VoteIt
 
             if (useSQLite)
             {
+                services.AddEntityFrameworkSqlite();
+
+                //// VoteItDBContext
                 services.AddDbContextPool<VoteItDBContext>(options =>
                     options.UseSqlite(Configuration.GetConnectionString("VoteItDB.sqlite")));
 
                 var option = new DbContextOptionsBuilder().UseSqlite(Configuration.GetConnectionString("VoteItDB.sqlite")).Options;
                 services.AddSingleton(option).AddScoped<VoteItDBContext>();
+
+                //// ApplicationDbContext
+                services.AddDbContextPool<ApplicationDbContext>(options =>
+                    options.UseSqlite(Configuration.GetConnectionString("VoteItDB.sqlite")));
+
+                var applicationDbContextOptions = new DbContextOptionsBuilder().UseSqlite(Configuration.GetConnectionString("VoteItDB.sqlite")).Options;
+                services.AddSingleton(applicationDbContextOptions).AddScoped<ApplicationDbContext>();
             }
             else
             {
+                services.AddEntityFrameworkSqlServer();
+
                 services.AddDbContextPool<VoteItDBContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("VoteItDBDatabase")));
 
