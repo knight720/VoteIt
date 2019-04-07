@@ -23,9 +23,17 @@ namespace VoteIt.Controllers
         }
 
         // GET: VoteIt
-        public ActionResult Index(SortEnum sort = SortEnum.New)
+        public ActionResult Index(SortEnum sort = SortEnum.New, int ipage = 0)
         {
-            List<Feed> list = this._feedRepository.GetFeedList(sort);
+            int feedPage = 10;
+            int feedCount = this._feedRepository.FeedCount();
+
+            ViewBag.Sort = sort;
+            ViewBag.PageCount = Math.Ceiling((decimal)feedCount / (decimal)feedPage);
+            ViewBag.CurrentPage = ipage;
+
+            List<Feed> list = this._feedRepository.GetFeedList(sort, ipage, feedPage);
+
             return View(list);
         }
 

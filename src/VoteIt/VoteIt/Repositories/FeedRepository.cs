@@ -60,16 +60,16 @@ namespace VoteIt.Repositories
             return list;
         }
 
-        public List<Feed> GetFeedList(SortEnum sortEnum)
+        public List<Feed> GetFeedList(SortEnum sortEnum, int page, int feedPage)
         {
             List<Feed> list = new List<Feed>();
             if (sortEnum == SortEnum.New)
             {
-                list = this.GetFeedListWithFeedLikeOrderByDate();
+                list = this.GetFeedListWithFeedLikeOrderByDate(page, feedPage);
             }
             else if (sortEnum == SortEnum.Like)
             {
-                list = this.GetFeedListWithFeedLikeOrderByLike();
+                list = this.GetFeedListWithFeedLikeOrderByLike(page, feedPage);
             }
 
             return list;
@@ -166,20 +166,24 @@ namespace VoteIt.Repositories
             }
         }
 
-        public List<Feed> GetFeedListWithFeedLikeOrderByLike()
+        public List<Feed> GetFeedListWithFeedLikeOrderByLike(int page, int feedPage)
         {
             var feedList = this.GetFeedListWithFeedLike()
                 .OrderByDescending(i => i.FeedLike)
-                .ThenBy(i => i.FeedCreatedDateTime)
+                .ThenByDescending(i => i.FeedCreatedDateTime)
+                .Skip(feedPage * page)
+                .Take(feedPage)
                 .ToList();
 
             return feedList;
         }
 
-        public List<Feed> GetFeedListWithFeedLikeOrderByDate()
+        public List<Feed> GetFeedListWithFeedLikeOrderByDate(int page, int feedPage)
         {
             var feedList = this.GetFeedListWithFeedLike()
                 .OrderByDescending(i => i.FeedCreatedDateTime)
+                .Skip(feedPage * page)
+                .Take(feedPage)
                 .ToList();
 
             return feedList;
