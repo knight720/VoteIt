@@ -138,7 +138,7 @@ namespace VoteIt
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=VoteIt}/{action=Index}/{id?}");
             });
         }
     }
