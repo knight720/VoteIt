@@ -91,3 +91,12 @@ body {
 .btn-sort {
     margin-bottom: 1em;
 }
+
+.pagination > .active > a {
+    background-color: #e7462b;
+    border-color: #d43f3a;
+}
+
+.pagination > li > a {
+    color: #e7462b;
+}
