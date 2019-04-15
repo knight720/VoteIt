@@ -92,6 +92,10 @@ body {
     margin-bottom: 1em;
 }
 
+.pagination {
+    margin: 0 0 10px 0;
+}
+
 .pagination > .active > a {
     background-color: #e7462b;
     border-color: #d43f3a;

@@ -13,26 +13,33 @@
     </div>
 </p>
 
-<div class="btn-group pull-right btn-sort" role="group" aria-label="Basic example">
-    <a asp-action="Index" asp-route-sort="New"><button type="button" class="btn btn-danger">New</button></a>
-    <a asp-action="Index" asp-route-sort="Like"><button type="button" class="btn btn-danger">Like</button></a>
+<div class="container">
+    <div class="row">
+        <div class="btn-group pull-right btn-sort" role="group" aria-label="Basic example">
+            <a asp-action="Index" asp-route-sort="New"><button type="button" class="btn btn-danger">New</button></a>
+            <a asp-action="Index" asp-route-sort="Like"><button type="button" class="btn btn-danger">Like</button></a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="pull-right">
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    @for (int i = 0; i < @ViewBag.PageCount; i++)
+                    {
+                        @if (@ViewBag.CurrentPage.Equals(i))
+                         {
+                             <li class="active"><a asp-action="Index" asp-route-sort="@ViewBag.Sort" asp-route-ipage="@i">@(i + 1)</a></li>
+                         }
+                         else
+                         {
+                             <li><a asp-action="Index" asp-route-sort="@ViewBag.Sort" asp-route-ipage="@i">@(i + 1)</a></li>
+                         }
+                    }
+                </ul>
+            </nav>
+        </div>
+    </div>
 </div>
-
-<nav aria-label="Page navigation">
-    <ul class="pagination">
-        @for (int i = 0; i < @ViewBag.PageCount; i++)
-        {
-            @if (@ViewBag.CurrentPage.Equals(i))
-            {
-                <li class="active"><a asp-action="Index" asp-route-sort="@ViewBag.Sort" asp-route-ipage="@i">@(i + 1)</a></li>
-            }
-            else
-            {
-                <li><a asp-action="Index" asp-route-sort="@ViewBag.Sort" asp-route-ipage="@i">@(i + 1)</a></li>
-            }
-        }
-    </ul>
-</nav>
 
 <table class="table">
     <tbody>
