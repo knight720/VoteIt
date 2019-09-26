@@ -25,10 +25,11 @@ docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=[?]' -e 'MSSQL_PID=Express' -p 143
 
 - Entity Framework Core DB First
 ```powershell  
+# SQLSERVER
 Scaffold-DbContext "Server=localhost;~Database=VoteItDB;User ID=[?];Password=[?];" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Tables Feed,FeedLike -force  
 ```
-SQLite
 ```powershell  
+# SQLite
 Scaffold-DbContext "DataSource=D:\Code\Test\VoteIt\data\VoteItDB.sqlite" Microsoft.EntityFrameworkCore.Sqlite -OutputDir Models -Tables Feed,FeedLike -force  
 ```
 
