@@ -25,7 +25,11 @@ docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=[?]' -e 'MSSQL_PID=Express' -p 143
 
 - Entity Framework Core DB First
 ```powershell  
-Scaffold-DbContext "Server=localhost;~Database=VoteItDB;User ID=[?];Password=[?];" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Tables Feed FeedLike -force  
+Scaffold-DbContext "Server=localhost;~Database=VoteItDB;User ID=[?];Password=[?];" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Tables Feed,FeedLike -force  
+```
+SQLite
+```powershell  
+Scaffold-DbContext "DataSource=D:\Code\Test\VoteIt\data\VoteItDB.sqlite" Microsoft.EntityFrameworkCore.Sqlite -OutputDir Models -Tables Feed,FeedLike -force  
 ```
 
 - [建立 LocalDB Instance](https://docs.microsoft.com/zh-tw/sql/tools/sqllocaldb-utility?view=sql-server-2017)  
@@ -104,3 +108,13 @@ Update-Database -Context ApplicationDbContext
     - [DbVisualizer](https://www.dbvis.com)
 
     - [SQLite & SQL Server Compact Toolbox](https://github.com/ErikEJ/SqlCeToolbox)
+
+- 回覆
+
+    - [How to build a table for a private messaging system that supports replies?](https://dba.stackexchange.com/questions/97963/how-to-build-a-table-for-a-private-messaging-system-that-supports-replies)
+
+    - [Posts, comments, replies, and likes database schema](https://stackoverflow.com/questions/55074867/posts-comments-replies-and-likes-database-schema)
+
+- Google 頭像
+
+    - [How to retrieve Google profile picture from logged in user with ASP.Net Core Identity?](https://stackoverflow.com/questions/45855503/how-to-retrieve-google-profile-picture-from-logged-in-user-with-asp-net-core-ide)

@@ -11,5 +11,6 @@ namespace VoteIt.Models
         public DateTime FeedCreatedDateTime { get; set; }
         public string FeedCreatedUser { get; set; }
         public bool FeedValidFlag { get; set; }
+        public int FeedParentId { get; set; }
     }
 }

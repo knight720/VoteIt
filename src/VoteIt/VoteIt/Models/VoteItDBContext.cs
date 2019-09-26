@@ -51,6 +51,8 @@ namespace VoteIt.Models
                     .HasMaxLength(160);
 
                 entity.Property(e => e.FeedValidFlag).HasColumnName("Feed_ValidFlag");
+
+                entity.Property(e => e.FeedParentId).HasColumnName("Feed_ParentId");
             });
 
             modelBuilder.Entity<FeedLike>(entity =>
