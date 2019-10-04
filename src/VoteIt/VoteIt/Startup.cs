@@ -36,10 +36,10 @@ namespace VoteIt
             services.AddMvc(config =>
                 config.Filters.Add(new AuthorizationFilter())
                 )
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
                 .AddRazorPagesOptions(options =>
             {
-                options.AllowAreas = true;
+                //options.AllowAreas = true;
                 options.Conventions.AuthorizeAreaFolder("Identity", "/Account/Manage");
                 options.Conventions.AuthorizeAreaPage("Identity", "/Account/Logout");
             });
@@ -132,13 +132,12 @@ namespace VoteIt
             app.UseCookiePolicy();
 
             app.UseStaticFiles();
+            app.UseRouting();
             app.UseAuthentication();
 
-            app.UseMvc(routes =>
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=VoteIt}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute("default", "{controller=VoteIt}/{action=Index}/{id?}");
             });
         }
     }
