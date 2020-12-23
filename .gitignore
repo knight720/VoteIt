@@ -331,3 +331,4 @@ ASALocalRun/
 
 # Customize
 *.min.*
+src/VoteIt/appsettings.Development.json
