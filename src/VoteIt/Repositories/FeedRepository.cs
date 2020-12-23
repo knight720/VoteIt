@@ -92,9 +92,11 @@ namespace VoteIt.Repositories
                 {
                     FeedLike_FeedId = fl.Key,
                     FeedLike_Count = fl.Count()
-                });
+                }).ToList();
 
-            var feedList = this._context.Feed.GroupJoin(
+            var rawFeedList = this._context.Feed.ToList();
+
+            var feedList = rawFeedList.GroupJoin(
                 feedLikeCount,
                 f => f.FeedId,
                 l => l.FeedLike_FeedId,
